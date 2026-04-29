@@ -1,0 +1,2031 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Les Délices Partagées</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Libre+Baskerville:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #faf7f2;
+    --beige: #f0ebe0;
+    --sand: #e2d9c8;
+    --warm-gray: #9e9589;
+    --charcoal: #2c2824;
+    --dark: #1a1612;
+    --accent: #8b6f4e;
+    --accent-light: #c4a882;
+    --accent-dark: #5c4832;
+    --white: #ffffff;
+    --border: #ddd5c6;
+    --success: #6b8c6b;
+    --error: #c0614b;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--cream);
+    color: var(--charcoal);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    overflow-x: hidden;
+  }
+
+  /* ── SCROLLBAR ── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: var(--beige); }
+  ::-webkit-scrollbar-thumb { background: var(--accent-light); border-radius: 3px; }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 0 4vw;
+    height: 72px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: rgba(250,247,242,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    transition: box-shadow 0.3s;
+  }
+  nav.scrolled { box-shadow: 0 4px 30px rgba(44,40,36,0.08); }
+
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    color: var(--charcoal);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .nav-logo span { color: var(--accent); font-style: italic; }
+  .nav-logo-mark {
+    width: 32px; height: 32px;
+    background: var(--accent);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    color: white;
+    font-size: 0.75rem;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+  }
+
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--warm-gray);
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--accent); }
+
+  .btn-add-nav {
+    background: var(--accent);
+    color: white !important;
+    padding: 0.6rem 1.4rem;
+    border-radius: 2px;
+    font-size: 0.75rem !important;
+    letter-spacing: 0.12em !important;
+    transition: background 0.2s !important;
+  }
+  .btn-add-nav:hover { background: var(--accent-dark) !important; color: white !important; }
+
+  /* ── HERO ── */
+  .hero {
+    padding-top: 72px;
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 8vw 6vw 8vw 8vw;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-tag {
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .hero-tag::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3.5rem, 6vw, 6rem);
+    font-weight: 300;
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    color: var(--dark);
+    margin-bottom: 2rem;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 1rem;
+    color: var(--warm-gray);
+    line-height: 1.8;
+    max-width: 420px;
+    margin-bottom: 3rem;
+  }
+
+  .hero-ctas {
+    display: flex;
+    gap: 1.2rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--charcoal);
+    color: white;
+    padding: 1rem 2.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background 0.25s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--accent); transform: translateY(-1px); }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--charcoal);
+    padding: 1rem 2.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    border-radius: 2px;
+    text-decoration: none;
+    display: inline-block;
+    transition: border-color 0.25s, color 0.25s;
+  }
+  .btn-secondary:hover { border-color: var(--accent); color: var(--accent); }
+
+  .hero-right {
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-right img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .hero-right::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, var(--cream) 0%, transparent 30%);
+  }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 3rem;
+    left: 0;
+    display: flex;
+    gap: 0;
+  }
+  .stat-item {
+    padding: 1.5rem 2.5rem;
+    background: var(--white);
+    border: 1px solid var(--border);
+    text-align: center;
+  }
+  .stat-item:first-child { border-right: none; }
+  .stat-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--accent);
+    line-height: 1;
+    display: block;
+  }
+  .stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    margin-top: 0.4rem;
+    display: block;
+  }
+
+  /* ── SECTION COMMONS ── */
+  .section-header {
+    text-align: center;
+    margin-bottom: 4rem;
+    padding: 0 1rem;
+  }
+  .section-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .section-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 300;
+    color: var(--dark);
+    line-height: 1.1;
+  }
+  .section-title em { font-style: italic; color: var(--accent); }
+  .section-sub {
+    font-size: 0.9rem;
+    color: var(--warm-gray);
+    margin-top: 1rem;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+  }
+  .section-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--accent-light);
+    margin: 1.5rem auto 0;
+  }
+
+  /* ── GAUDRY SECTION ── */
+  #recettes-gaudry {
+    padding: 8rem 6vw;
+    background: var(--white);
+  }
+
+  .gaudry-intro {
+    background: var(--beige);
+    border-left: 3px solid var(--accent);
+    padding: 1.5rem 2rem;
+    margin-bottom: 4rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 0 2px 2px 0;
+  }
+  .gaudry-intro p {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-style: italic;
+    color: var(--charcoal);
+    line-height: 1.7;
+  }
+  .gaudry-intro cite {
+    display: block;
+    margin-top: 0.8rem;
+    font-size: 0.75rem;
+    font-style: normal;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .recipes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .recipe-card {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+    position: relative;
+  }
+  .recipe-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 48px rgba(44,40,36,0.12);
+  }
+
+  .card-img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s;
+  }
+  .recipe-card:hover .card-img { transform: scale(1.03); }
+
+  .card-img-wrap {
+    overflow: hidden;
+    position: relative;
+  }
+  .card-region {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--accent);
+    color: white;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.7rem;
+    border-radius: 1px;
+  }
+
+  .card-body {
+    padding: 1.5rem;
+  }
+  .card-meta {
+    display: flex;
+    gap: 1.2rem;
+    margin-bottom: 0.8rem;
+  }
+  .card-meta-item {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .card-meta-item svg { flex-shrink: 0; }
+
+  .card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--dark);
+    line-height: 1.2;
+    margin-bottom: 0.6rem;
+  }
+  .card-desc {
+    font-size: 0.83rem;
+    color: var(--warm-gray);
+    line-height: 1.65;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .card-footer {
+    padding: 1rem 1.5rem;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .card-difficulty {
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--warm-gray);
+  }
+  .card-btn {
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: gap 0.2s;
+  }
+  .card-btn:hover { gap: 0.8rem; }
+
+  /* ── COMMUNITY SECTION ── */
+  #recettes-communaute {
+    padding: 8rem 6vw;
+    background: var(--cream);
+  }
+
+  .community-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .community-card {
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1.8rem;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+    position: relative;
+  }
+  .community-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(44,40,36,0.1);
+  }
+  .community-card.empty {
+    border: 1px dashed var(--sand);
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 160px;
+    cursor: default;
+  }
+  .empty-icon {
+    font-size: 1.5rem;
+    color: var(--sand);
+    margin-bottom: 0.8rem;
+  }
+  .empty-text {
+    font-size: 0.75rem;
+    color: var(--sand);
+    text-align: center;
+    letter-spacing: 0.05em;
+  }
+
+  .cc-tag {
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.7rem;
+    display: block;
+  }
+  .cc-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: var(--dark);
+    margin-bottom: 0.5rem;
+    line-height: 1.2;
+  }
+  .cc-meta {
+    font-size: 0.75rem;
+    color: var(--warm-gray);
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .add-recipe-banner {
+    max-width: 1400px;
+    margin: 0 auto 3rem;
+    background: var(--beige);
+    border: 1px solid var(--border);
+    padding: 2.5rem 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+    border-radius: 3px;
+  }
+  .add-recipe-banner h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--dark);
+  }
+  .add-recipe-banner p {
+    font-size: 0.85rem;
+    color: var(--warm-gray);
+    margin-top: 0.4rem;
+  }
+
+  /* ── MODAL RECIPE ── */
+  .modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(26,22,18,0.7);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    backdrop-filter: blur(4px);
+  }
+  .modal-overlay.active { display: flex; }
+
+  .modal {
+    background: var(--cream);
+    max-width: 820px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 4px;
+    position: relative;
+    animation: modalIn 0.35s cubic-bezier(0.16,1,0.3,1);
+  }
+  @keyframes modalIn {
+    from { opacity: 0; transform: translateY(24px) scale(0.97); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  .modal-close {
+    position: sticky;
+    top: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: flex-end;
+    padding: 1.2rem 1.5rem 0;
+    background: var(--cream);
+    z-index: 1;
+  }
+  .modal-close-btn {
+    background: none;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    color: var(--warm-gray);
+    font-size: 1.2rem;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s, color 0.2s;
+  }
+  .modal-close-btn:hover { background: var(--charcoal); color: white; border-color: var(--charcoal); }
+
+  .modal-img {
+    width: 100%;
+    height: 280px;
+    object-fit: cover;
+    display: block;
+  }
+
+  .modal-content {
+    padding: 2.5rem 3rem 3rem;
+  }
+
+  .modal-tag {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 0.8rem;
+  }
+  .modal-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.2rem;
+    font-weight: 400;
+    color: var(--dark);
+    line-height: 1.1;
+    margin-bottom: 0.5rem;
+  }
+  .modal-desc {
+    font-size: 0.9rem;
+    color: var(--warm-gray);
+    line-height: 1.75;
+    margin-bottom: 2rem;
+  }
+
+  .servings-control {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    background: var(--beige);
+    padding: 1rem 1.5rem;
+    border-radius: 3px;
+    margin-bottom: 2rem;
+    width: fit-content;
+  }
+  .servings-label {
+    font-size: 0.75rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+  }
+  .servings-btn {
+    background: var(--white);
+    border: 1px solid var(--border);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.1rem;
+    color: var(--charcoal);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    line-height: 1;
+  }
+  .servings-btn:hover { background: var(--accent); color: white; border-color: var(--accent); }
+  .servings-count {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 400;
+    color: var(--accent);
+    min-width: 30px;
+    text-align: center;
+  }
+
+  .modal-columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+    margin-bottom: 2rem;
+  }
+  @media (max-width: 600px) { .modal-columns { grid-template-columns: 1fr; } }
+
+  .modal-section-title {
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .ingredients-list { list-style: none; }
+  .ingredients-list li {
+    display: flex;
+    align-items: baseline;
+    gap: 0.8rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid rgba(226,217,200,0.5);
+    font-size: 0.88rem;
+    color: var(--charcoal);
+  }
+  .ingredients-list li:last-child { border-bottom: none; }
+  .ingredient-qty {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--accent);
+    min-width: 55px;
+    flex-shrink: 0;
+  }
+
+  .steps-list { list-style: none; counter-reset: steps; }
+  .steps-list li {
+    counter-increment: steps;
+    padding: 1rem 0;
+    border-bottom: 1px solid rgba(226,217,200,0.5);
+    font-size: 0.88rem;
+    color: var(--charcoal);
+    line-height: 1.7;
+    display: flex;
+    gap: 1rem;
+  }
+  .steps-list li:last-child { border-bottom: none; }
+  .steps-list li::before {
+    content: counter(steps, decimal-leading-zero);
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--accent-light);
+    flex-shrink: 0;
+    min-width: 30px;
+  }
+
+  .modal-tip {
+    background: var(--beige);
+    border-left: 3px solid var(--accent-light);
+    padding: 1.2rem 1.5rem;
+    border-radius: 0 3px 3px 0;
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--charcoal);
+    line-height: 1.7;
+  }
+  .modal-tip strong {
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-ustensiles {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .ustensile-tag {
+    background: var(--white);
+    border: 1px solid var(--border);
+    padding: 0.35rem 0.8rem;
+    border-radius: 50px;
+    font-size: 0.72rem;
+    color: var(--charcoal);
+  }
+
+  /* ── FORM MODAL ── */
+  .form-modal {
+    background: var(--white);
+    max-width: 720px;
+    width: 100%;
+    max-height: 92vh;
+    overflow-y: auto;
+    border-radius: 4px;
+    position: relative;
+    animation: modalIn 0.35s cubic-bezier(0.16,1,0.3,1);
+  }
+
+  .form-modal-header {
+    padding: 2.5rem 3rem 2rem;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--white);
+    z-index: 1;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .form-modal-header h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--dark);
+  }
+  .form-modal-header p {
+    font-size: 0.82rem;
+    color: var(--warm-gray);
+    margin-top: 0.3rem;
+  }
+
+  .form-body {
+    padding: 2.5rem 3rem;
+  }
+
+  .form-group {
+    margin-bottom: 1.8rem;
+  }
+  .form-label {
+    display: block;
+    font-size: 0.68rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--charcoal);
+    margin-bottom: 0.7rem;
+    font-weight: 400;
+  }
+  .form-label span {
+    color: var(--accent);
+    font-style: italic;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.75rem;
+  }
+
+  .form-input,
+  .form-textarea,
+  .form-select {
+    width: 100%;
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 0.9rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.88rem;
+    font-weight: 300;
+    color: var(--charcoal);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .form-input:focus,
+  .form-textarea:focus,
+  .form-select:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(139,111,78,0.08);
+  }
+  .form-textarea {
+    resize: vertical;
+    min-height: 100px;
+    line-height: 1.65;
+  }
+
+  .form-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+  }
+  @media (max-width: 500px) { .form-grid-2 { grid-template-columns: 1fr; } }
+
+  .form-hint {
+    font-size: 0.72rem;
+    color: var(--warm-gray);
+    margin-top: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .form-footer {
+    padding: 1.5rem 3rem 2.5rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+  }
+
+  .btn-submit {
+    background: var(--accent);
+    color: white;
+    padding: 1rem 2.5rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.2s;
+  }
+  .btn-submit:hover { background: var(--accent-dark); }
+  .btn-cancel {
+    background: transparent;
+    color: var(--warm-gray);
+    padding: 1rem 2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    border-radius: 2px;
+    transition: color 0.2s;
+  }
+  .btn-cancel:hover { color: var(--charcoal); }
+
+  .success-msg {
+    display: none;
+    background: #eef4ee;
+    border: 1px solid #b5d0b5;
+    color: var(--success);
+    padding: 1rem 1.5rem;
+    border-radius: 2px;
+    font-size: 0.85rem;
+    margin: 0 3rem 1.5rem;
+  }
+
+  /* ── ABOUT SECTION ── */
+  #a-propos {
+    padding: 8rem 6vw;
+    background: var(--charcoal);
+    color: var(--beige);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6vw;
+    align-items: center;
+  }
+  @media (max-width: 768px) { #a-propos { grid-template-columns: 1fr; } }
+
+  .about-img-wrap {
+    position: relative;
+  }
+  .about-img {
+    width: 100%;
+    height: 450px;
+    object-fit: cover;
+    border-radius: 3px;
+    display: block;
+  }
+  .about-badge {
+    position: absolute;
+    bottom: -1.5rem;
+    right: -1.5rem;
+    background: var(--accent);
+    color: white;
+    padding: 1.5rem;
+    border-radius: 50%;
+    width: 110px;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+  }
+  .about-badge-num { font-size: 1.8rem; line-height: 1; }
+  .about-badge-txt { font-size: 0.6rem; letter-spacing: 0.1em; margin-top: 0.2rem; }
+
+  .about-content .section-tag { color: var(--accent-light); }
+  .about-content .section-title { color: var(--cream); }
+
+  .about-content p {
+    font-size: 0.9rem;
+    line-height: 1.85;
+    color: rgba(240,235,224,0.7);
+    margin-top: 1.5rem;
+  }
+  .about-content p + p { margin-top: 1rem; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--dark);
+    color: rgba(240,235,224,0.5);
+    padding: 4rem 6vw 2rem;
+  }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 3rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    flex-wrap: wrap;
+  }
+  .footer-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--cream);
+    letter-spacing: 0.02em;
+  }
+  .footer-logo em { color: var(--accent-light); font-style: italic; }
+  .footer-tagline {
+    font-size: 0.8rem;
+    color: rgba(240,235,224,0.4);
+    margin-top: 0.5rem;
+    line-height: 1.6;
+    max-width: 260px;
+  }
+  .footer-links-col h4 {
+    font-size: 0.65rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent-light);
+    margin-bottom: 1.2rem;
+  }
+  .footer-links-col ul { list-style: none; }
+  .footer-links-col li + li { margin-top: 0.7rem; }
+  .footer-links-col a {
+    text-decoration: none;
+    color: rgba(240,235,224,0.5);
+    font-size: 0.83rem;
+    transition: color 0.2s;
+  }
+  .footer-links-col a:hover { color: var(--accent-light); }
+
+  .footer-bottom {
+    padding-top: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.75rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+  .footer-by {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.9rem;
+    color: var(--accent-light);
+    font-style: italic;
+    letter-spacing: 0.05em;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .hero-left { padding: 5rem 6vw 5rem; }
+    .nav-links { display: none; }
+    .modal-content { padding: 1.5rem 1.5rem 2rem; }
+    .modal-columns { grid-template-columns: 1fr; }
+    .form-modal-header, .form-body, .form-footer { padding-left: 1.5rem; padding-right: 1.5rem; }
+    .add-recipe-banner { padding: 1.5rem; flex-direction: column; }
+  }
+
+  /* ── TOAST ── */
+  .toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--charcoal);
+    color: var(--cream);
+    padding: 1rem 1.8rem;
+    border-radius: 3px;
+    font-size: 0.85rem;
+    z-index: 500;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16,1,0.3,1);
+    border-left: 3px solid var(--accent);
+  }
+  .toast.show { transform: translateY(0); opacity: 1; }
+
+  /* ── LOADER COUNT ── */
+  #communaute-count {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--accent);
+    font-size: 1.2rem;
+  }
+
+  /* Separator ornement */
+  .ornement {
+    text-align: center;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--accent-light);
+    letter-spacing: 0.8em;
+    margin: 0 auto;
+    display: block;
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <div class="nav-logo-mark">LD</div>
+    Les <span>Délices</span> Partagées
+  </a>
+  <ul class="nav-links">
+    <li><a href="#recettes-gaudry">Sélection Gaudry</a></li>
+    <li><a href="#recettes-communaute">Communauté</a></li>
+    <li><a href="#a-propos">À propos</a></li>
+    <li><a href="#" class="btn-add-nav" id="navAddBtn">+ Ajouter</a></li>
+  </ul>
+</nav>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Cuisine & Partage · Depuis 2024</div>
+    <h1 class="hero-title">
+      La table<br>des <em>saveurs</em><br>partagées
+    </h1>
+    <p class="hero-desc">
+      Un espace où la cuisine de terroir rencontre la créativité de chacun. Inspirées des plus grandes pages de François-Régis Gaudry, et enrichies de vos propres créations.
+    </p>
+    <div class="hero-ctas">
+      <a href="#recettes-gaudry" class="btn-primary">Découvrir les recettes</a>
+      <a href="#" class="btn-secondary" id="heroAddBtn">Partager la mienne</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num" id="heroStatCommunity">0</span>
+        <span class="stat-label">Recettes partagées</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">10</span>
+        <span class="stat-label">Recettes Gaudry</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?w=900&q=80" alt="cuisine française" />
+  </div>
+</section>
+
+<!-- ══════════════════ GAUDRY SECTION ══════════════════ -->
+<section id="recettes-gaudry">
+  <div class="section-header">
+    <span class="section-tag">Sélection éditoriale</span>
+    <h2 class="section-title">Les recettes de <em>François-Régis Gaudry</em></h2>
+    <p class="section-sub">Dix recettes emblématiques tirées de son œuvre, rendant hommage aux traditions culinaires de la France profonde.</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="gaudry-intro">
+    <p>« La cuisine française, c'est l'addition de milliers de cuisines régionales, chacune portant l'histoire d'un peuple, d'un terroir, d'une saison. »</p>
+    <cite>— François-Régis Gaudry, <em>On va déguster la France</em></cite>
+  </div>
+
+  <div class="recipes-grid" id="gaudryGrid">
+    <!-- Injectées via JS -->
+  </div>
+</section>
+
+<!-- ══════════════════ COMMUNAUTE SECTION ══════════════════ -->
+<section id="recettes-communaute">
+  <div class="section-header">
+    <span class="section-tag">Contributions · <span id="communaute-count">0</span> / 100</span>
+    <h2 class="section-title">La <em>communauté</em> en cuisine</h2>
+    <p class="section-sub">Cent places à table pour vos créations. Partagez vos recettes, vos astuces, et faites vivre cette communauté.</p>
+    <div class="section-divider"></div>
+  </div>
+
+  <div class="add-recipe-banner">
+    <div>
+      <h3>Votre recette mérite d'être ici</h3>
+      <p>Remplissez le formulaire et rejoignez les <span id="bannerCount">0</span> recettes déjà partagées.</p>
+    </div>
+    <button class="btn-primary" id="bannerAddBtn">+ Ajouter ma recette</button>
+  </div>
+
+  <div class="community-grid" id="communityGrid">
+    <!-- Injectées via JS -->
+  </div>
+</section>
+
+<!-- ══════════════════ À PROPOS ══════════════════ -->
+<section id="a-propos">
+  <div class="about-img-wrap">
+    <img src="https://images.unsplash.com/photo-1466637574441-749b8f19452f?w=800&q=80" alt="marché français" class="about-img" />
+    <div class="about-badge">
+      <span class="about-badge-num">100</span>
+      <span class="about-badge-txt">Recettes communauté</span>
+    </div>
+  </div>
+  <div class="about-content">
+    <span class="section-tag">Notre histoire</span>
+    <h2 class="section-title">Un projet né de la <em>passion</em></h2>
+    <p>Les Délices Partagées est née d'une conviction simple : les meilleures recettes sont celles que l'on transmet. Qu'il s'agisse d'un héritage familial ou d'une découverte récente, chaque plat raconte une histoire.</p>
+    <p>Inspirés par le travail remarquable de François-Régis Gaudry — journaliste gastronomique, auteur de <em>On va déguster la France</em> — nous avons voulu créer un espace où son amour du terroir rencontre la générosité collective.</p>
+    <p>Ici, les recettes circulent, les saveurs se partagent, et la table est toujours ouverte.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer>
+  <div class="footer-top">
+    <div>
+      <div class="footer-logo">Les <em>Délices</em> Partagées</div>
+      <p class="footer-tagline">Un espace culinaire vivant, nourri par la tradition et enrichi par chacun d'entre vous.</p>
+    </div>
+    <div class="footer-links-col">
+      <h4>Navigation</h4>
+      <ul>
+        <li><a href="#recettes-gaudry">Sélection Gaudry</a></li>
+        <li><a href="#recettes-communaute">Communauté</a></li>
+        <li><a href="#a-propos">À propos</a></li>
+      </ul>
+    </div>
+    <div class="footer-links-col">
+      <h4>Contribuer</h4>
+      <ul>
+        <li><a href="#" id="footerAddBtn">Ajouter une recette</a></li>
+        <li><a href="#recettes-communaute">Voir les partages</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2024 Les Délices Partagées — Tous droits réservés</span>
+    <span class="footer-by">by Léonard</span>
+  </div>
+</footer>
+
+<!-- ══════════════════ MODAL RECETTE ══════════════════ -->
+<div class="modal-overlay" id="recipeModal">
+  <div class="modal">
+    <div class="modal-close">
+      <button class="modal-close-btn" id="recipeModalClose">✕</button>
+    </div>
+    <img src="" alt="" class="modal-img" id="modalImg" />
+    <div class="modal-content">
+      <div class="modal-tag" id="modalTag"></div>
+      <h2 class="modal-title" id="modalTitle"></h2>
+      <p class="modal-desc" id="modalDesc"></p>
+
+      <div class="servings-control">
+        <span class="servings-label">Couverts</span>
+        <button class="servings-btn" id="servingsDown">−</button>
+        <span class="servings-count" id="servingsCount">4</span>
+        <button class="servings-btn" id="servingsUp">+</button>
+      </div>
+
+      <div class="modal-columns">
+        <div>
+          <div class="modal-section-title">Ingrédients</div>
+          <ul class="ingredients-list" id="modalIngredients"></ul>
+        </div>
+        <div>
+          <div class="modal-section-title">Préparation</div>
+          <ol class="steps-list" id="modalSteps"></ol>
+        </div>
+      </div>
+
+      <div id="modalUstBlock">
+        <div class="modal-section-title">Ustensiles</div>
+        <div class="modal-ustensiles" id="modalUstensiles"></div>
+      </div>
+
+      <div class="modal-tip" id="modalTip" style="display:none">
+        <strong>Astuce du chef</strong>
+        <span id="modalTipText"></span>
+      </div>
+
+      <div id="modalGestureBlock" style="display:none; margin-top:1.5rem;">
+        <div class="modal-section-title">Geste important</div>
+        <p style="font-size:0.87rem; color:var(--charcoal); line-height:1.7;" id="modalGestureText"></p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ MODAL FORMULAIRE ══════════════════ -->
+<div class="modal-overlay" id="formModal">
+  <div class="form-modal">
+    <div class="form-modal-header">
+      <div>
+        <h2>Partager ma recette</h2>
+        <p>Toutes les informations marquées d'un <em style="color:var(--accent)">*</em> sont obligatoires.</p>
+      </div>
+      <button class="modal-close-btn" id="formModalClose">✕</button>
+    </div>
+
+    <div class="success-msg" id="successMsg">
+      ✓ Votre recette a bien été ajoutée ! Elle apparaît maintenant dans la communauté.
+    </div>
+
+    <div class="form-body">
+      <div class="form-group">
+        <label class="form-label" for="f-nom">Nom de la recette <span>*</span></label>
+        <input type="text" class="form-input" id="f-nom" placeholder="ex. Tarte fine aux pommes de ma grand-mère" />
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label class="form-label" for="f-couverts">Nombre de couverts <span>*</span></label>
+          <input type="number" class="form-input" id="f-couverts" placeholder="4" min="1" max="50" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-temps">Temps de préparation <span>*</span></label>
+          <input type="text" class="form-input" id="f-temps" placeholder="ex. 45 min" />
+        </div>
+      </div>
+
+      <div class="form-grid-2">
+        <div class="form-group">
+          <label class="form-label" for="f-cuisson">Temps de cuisson</label>
+          <input type="text" class="form-input" id="f-cuisson" placeholder="ex. 30 min" />
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="f-difficulte">Difficulté</label>
+          <select class="form-select" id="f-difficulte">
+            <option value="Facile">Facile</option>
+            <option value="Intermédiaire" selected>Intermédiaire</option>
+            <option value="Avancé">Avancé</option>
+            <option value="Expert">Expert</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-description">Description courte <span>*</span></label>
+        <textarea class="form-textarea" id="f-description" rows="3" placeholder="Décrivez votre recette en quelques mots…"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-ingredients">
+          Ingrédients <span>* — une ligne par ingrédient, format : quantité · unité · ingrédient</span>
+        </label>
+        <textarea class="form-textarea" id="f-ingredients" rows="6"
+          placeholder="ex:&#10;200 · g · farine&#10;3 · pièces · œufs&#10;100 · ml · lait entier"></textarea>
+        <p class="form-hint">Utilisez le séparateur " · " entre quantité, unité et nom pour que le système ajuste automatiquement les couverts.</p>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-etapes">Étapes de préparation <span>* — une étape par ligne</span></label>
+        <textarea class="form-textarea" id="f-etapes" rows="7"
+          placeholder="ex:&#10;Préchauffer le four à 180°C.&#10;Mélanger la farine et les œufs.&#10;Verser dans le moule et cuire 30 min."></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-ustensiles">Ustensiles <span>— séparés par des virgules</span></label>
+        <input type="text" class="form-input" id="f-ustensiles" placeholder="ex. Fouet, Moule à tarte 28cm, Casserole, Papier sulfurisé" />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-astuce">Astuce du chef</label>
+        <textarea class="form-textarea" id="f-astuce" rows="3" placeholder="Partagez votre truc ou conseil qui fait la différence…"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-geste">Geste important</label>
+        <textarea class="form-textarea" id="f-geste" rows="3" placeholder="Décrivez le geste technique clé de la recette…"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="f-region">Région / Origine</label>
+        <input type="text" class="form-input" id="f-region" placeholder="ex. Bretagne, Italie, Alsace…" />
+      </div>
+    </div>
+
+    <div class="form-footer">
+      <button class="btn-submit" id="submitRecipeBtn">Publier ma recette</button>
+      <button class="btn-cancel" id="formCancelBtn">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TOAST ══════════════════ -->
+<div class="toast" id="toast">Recette ajoutée avec succès !</div>
+
+<!-- ══════════════════ SCRIPTS ══════════════════ -->
+<script>
+// ─── DATA : 10 RECETTES GAUDRY ───────────────────────────────────────────────
+const gaudryRecipes = [
+  {
+    id: 'g1',
+    title: 'Pot-au-feu à l\'ancienne',
+    region: 'Île-de-France',
+    tag: 'Plat mijoté',
+    difficulty: 'Intermédiaire',
+    prepTime: '30 min',
+    cookTime: '3h',
+    baseServings: 6,
+    desc: 'Le monument de la cuisine bourgeoise française, lentement mijoté avec légumes d\'hiver et viandes choisies. Un plat qui réchauffe l\'âme autant que le corps.',
+    img: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?w=700&q=80',
+    ingredients: [
+      { qty: 1.2, unit: 'kg', name: 'paleron de bœuf' },
+      { qty: 600, unit: 'g', name: 'plat de côtes' },
+      { qty: 4, unit: 'pièces', name: 'carottes' },
+      { qty: 3, unit: 'pièces', name: 'poireaux' },
+      { qty: 2, unit: 'pièces', name: 'navets' },
+      { qty: 1, unit: 'pièce', name: 'céleri-branche' },
+      { qty: 1, unit: 'pièce', name: 'oignon piqué de clous de girofle' },
+      { qty: 1, unit: 'bouquet', name: 'garni (thym, laurier, persil)' },
+      { qty: 8, unit: 'pièces', name: 'pommes de terre' },
+      { qty: 1, unit: 'c.s.', name: 'gros sel' }
+    ],
+    steps: [
+      'Plonger les viandes dans une grande marmite d\'eau froide salée. Porter à ébullition et écumer soigneusement pendant 15 minutes.',
+      'Ajouter l\'oignon, le bouquet garni, les carottes, les navets, le céleri et les poireaux ficelés.',
+      'Laisser mijoter à feu très doux pendant 2h30, en écumant régulièrement.',
+      'Ajouter les pommes de terre 30 minutes avant la fin.',
+      'Servir le bouillon en entrée, puis les viandes et légumes séparément, avec cornichons, moutarde et fleur de sel.'
+    ],
+    tip: 'Pour un bouillon cristallin, ne jamais faire bouillir à gros bouillons. L\'écumage dès le départ est la clé d\'un résultat parfait.',
+    gesture: 'L\'écumage au départ est fondamental. Utilisez une écumoire large, retirez la mousse grise dès qu\'elle apparaît.',
+    ustensiles: ['Grande marmite 8L', 'Écumoire', 'Ficelle de cuisine', 'Louche']
+  },
+  {
+    id: 'g2',
+    title: 'Soufflé au comté 18 mois',
+    region: 'Franche-Comté',
+    tag: 'Fromage',
+    difficulty: 'Avancé',
+    prepTime: '25 min',
+    cookTime: '28 min',
+    baseServings: 4,
+    desc: 'La recette emblématique de l\'art du soufflé, sublimée par un comté longtemps affiné aux arômes puissants de noisette et de beurre.',
+    img: 'https://images.unsplash.com/photo-1565958011703-44f9829ba187?w=700&q=80',
+    ingredients: [
+      { qty: 40, unit: 'g', name: 'beurre (+ pour les moules)' },
+      { qty: 40, unit: 'g', name: 'farine' },
+      { qty: 300, unit: 'ml', name: 'lait entier chaud' },
+      { qty: 150, unit: 'g', name: 'comté 18 mois râpé' },
+      { qty: 4, unit: 'pièces', name: 'œufs (jaunes + blancs séparés)' },
+      { qty: 1, unit: 'pincée', name: 'noix de muscade' },
+      { qty: 1, unit: 'pincée', name: 'poivre de Cayenne' }
+    ],
+    steps: [
+      'Préchauffer le four à 190°C. Beurrer généreusement les ramequins, fariner-les et réserver au froid.',
+      'Réaliser une béchamel : faire fondre le beurre, ajouter la farine, cuire 2 min. Verser le lait chaud progressivement en fouettant.',
+      'Hors du feu, incorporer les jaunes d\'œufs un à un, le comté râpé, la muscade, sel et Cayenne.',
+      'Monter les blancs en neige très ferme avec une pincée de sel.',
+      'Incorporer 1/4 des blancs dans la béchamel en fouettant, puis ajouter le reste délicatement à la maryse.',
+      'Remplir les ramequins aux 3/4. Passer le doigt sur le bord pour créer un « chapeau ». Cuire 25 à 28 min sans ouvrir le four.'
+    ],
+    tip: 'Le soufflé n\'attend pas ses convives — c\'est l\'inverse. Prévenez vos invités 30 minutes avant la sortie du four.',
+    gesture: 'Passer le pouce sur le bord intérieur du ramequin avant cuisson crée le « chapeau » caracteristique qui monte droit et haut.',
+    ustensiles: ['4 ramequins 200ml', 'Fouet', 'Maryse', 'Casserole', 'Batteur électrique']
+  },
+  {
+    id: 'g3',
+    title: 'Tarte à l\'oignon alsacienne',
+    region: 'Alsace',
+    tag: 'Tarte salée',
+    difficulty: 'Facile',
+    prepTime: '30 min',
+    cookTime: '40 min',
+    baseServings: 6,
+    desc: 'La Zwiebelkuche, cousine germanique de la quiche lorraine. Des oignons fondants, une migaine crémeuse sur une pâte brisée croustillante.',
+    img: 'https://images.unsplash.com/photo-1574894709920-11b28e7367e3?w=700&q=80',
+    ingredients: [
+      { qty: 300, unit: 'g', name: 'pâte brisée' },
+      { qty: 800, unit: 'g', name: 'oignons doux des Cévennes' },
+      { qty: 3, unit: 'pièces', name: 'œufs' },
+      { qty: 200, unit: 'ml', name: 'crème fraîche épaisse' },
+      { qty: 150, unit: 'g', name: 'lardons fumés' },
+      { qty: 30, unit: 'g', name: 'beurre' },
+      { qty: 1, unit: 'c.c.', name: 'cumin en graines' }
+    ],
+    steps: [
+      'Foncer un moule à tarte de 28 cm avec la pâte brisée. Piquer et réserver 30 min au frais.',
+      'Éplucher et émincer finement les oignons. Les faire suer dans le beurre à feu doux 30 min jusqu\'à ce qu\'ils soient bien fondants et légèrement dorés.',
+      'Faire revenir les lardons à sec. Les égoutter et les mélanger aux oignons.',
+      'Battre les œufs avec la crème fraîche. Saler, poivrer, ajouter le cumin.',
+      'Verser la garniture oignon-lardons sur le fond de tarte. Napper de migaine.',
+      'Cuire à 180°C pendant 40 min jusqu\'à ce que la tarte soit bien dorée.'
+    ],
+    tip: 'La patience est clé : les oignons doivent fondre sans jamais colorer. Couvrez à mi-cuisson si nécessaire.',
+    gesture: 'Émincer les oignons en demi-lunes très fines (2mm) pour une cuisson homogène et une texture soyeuse.',
+    ustensiles: ['Moule à tarte 28cm', 'Grande poêle', 'Mandoline', 'Fouet']
+  },
+  {
+    id: 'g4',
+    title: 'Brandade de morue à la nîmoise',
+    region: 'Languedoc',
+    tag: 'Poisson',
+    difficulty: 'Intermédiaire',
+    prepTime: '30 min',
+    cookTime: '20 min',
+    baseServings: 4,
+    desc: 'La brandade est l\'un des grands plats de la Méditerranée française. Morue dessalée émulsionnée à l\'huile d\'olive et au lait, avec ou sans pommes de terre selon les puristes.',
+    img: 'https://images.unsplash.com/photo-1519984388953-d2406bc725e1?w=700&q=80',
+    ingredients: [
+      { qty: 500, unit: 'g', name: 'morue dessalée (48h à l\'eau froide)' },
+      { qty: 200, unit: 'ml', name: 'huile d\'olive fruitée' },
+      { qty: 150, unit: 'ml', name: 'lait entier tiède' },
+      { qty: 2, unit: 'gousses', name: 'ail' },
+      { qty: 1, unit: 'bouquet', name: 'thym' },
+      { qty: 1, unit: 'feuille', name: 'laurier' },
+      { qty: 1, unit: 'pincée', name: 'noix de muscade' }
+    ],
+    steps: [
+      'Pocher la morue 10 min dans de l\'eau avec thym et laurier. Égoutter, effeuiller en retirant les arêtes et la peau.',
+      'Dans une casserole à fond épais, écraser la morue avec l\'ail finement haché à feu très doux.',
+      'Incorporer l\'huile d\'olive en filet tout en travaillant la pâte au pilon ou à la cuillère en bois.',
+      'Alterner avec le lait tiède, travailler énergiquement jusqu\'à obtenir une pâte crémeuse et onctueuse.',
+      'Assaisonner avec la muscade, poivre blanc. Rectifier le sel.',
+      'Servir tiède dans un plat à gratin légèrement doré au four, avec des croûtons frottés à l\'ail.'
+    ],
+    tip: 'La brandade ne se mixe jamais — on la travaille à la main pour conserver sa texture rustique caractéristique.',
+    gesture: 'Le geste du pilonnage : travailler en mouvements circulaires en ajoutant les liquides en alternance, comme pour une mayonnaise.',
+    ustensiles: ['Casserole à fond épais', 'Pilon ou cuillère en bois', 'Écumoire']
+  },
+  {
+    id: 'g5',
+    title: 'Cassoulet de Castelnaudary',
+    region: 'Occitanie',
+    tag: 'Plat emblématique',
+    difficulty: 'Avancé',
+    prepTime: '1h',
+    cookTime: '4h',
+    baseServings: 8,
+    desc: 'La triade sacrée de l\'Occitanie : haricots lingots, confit de canard, saucisse de Toulouse. Un plat de résistance qui demande du temps et beaucoup d\'amour.',
+    img: 'https://images.unsplash.com/photo-1534939561126-855b8675edd7?w=700&q=80',
+    ingredients: [
+      { qty: 800, unit: 'g', name: 'haricots lingots secs (trempés 12h)' },
+      { qty: 4, unit: 'pièces', name: 'cuisses de confit de canard' },
+      { qty: 600, unit: 'g', name: 'saucisses de Toulouse' },
+      { qty: 300, unit: 'g', name: 'lard de poitrine' },
+      { qty: 4, unit: 'pièces', name: 'tomates pelées' },
+      { qty: 2, unit: 'pièces', name: 'oignons' },
+      { qty: 6, unit: 'gousses', name: 'ail' },
+      { qty: 1, unit: 'bouquet', name: 'garni' },
+      { qty: 1, unit: 'c.s.', name: 'graisse de canard' }
+    ],
+    steps: [
+      'Blanchir les haricots 10 min. Les cuire dans un bouillon avec oignons, ail et bouquet garni jusqu\'à mi-cuisson.',
+      'Faire revenir dans la graisse de canard le lard, les saucisses et les confits jusqu\'à belle coloration.',
+      'Assembler dans une cassole (terre cuite) : une couche de haricots, les viandes, couvrir de haricots. Verser le bouillon à niveau.',
+      'Enfourner à 160°C pendant 3h. La croûte doit être brisée et enfoncée plusieurs fois pour nourrir le cassoulet.',
+      'La dernière croûte doit rester intacte et bien dorée. Servir directement dans la cassole.'
+    ],
+    tip: 'La tradition veut que l\'on brise la croûte 7 fois pendant la cuisson — chaque fois, elle se reforme et enrichit les haricots.',
+    gesture: 'Enfoncer délicatement la croûte avec le dos d\'une cuillère, sans la briser entièrement, pour l\'immerger dans le jus.',
+    ustensiles: ['Cassole en terre cuite', 'Grande marmite', 'Cuillère en bois']
+  },
+  {
+    id: 'g6',
+    title: 'Tarte Tatin de grand-mère',
+    region: 'Sologne',
+    tag: 'Dessert classique',
+    difficulty: 'Intermédiaire',
+    prepTime: '20 min',
+    cookTime: '45 min',
+    baseServings: 6,
+    desc: 'L\'accident culinaire le plus célèbre de France, sublimé par un caramel beurré maîtrisé et des pommes Reine des Reinettes fondantes à cœur.',
+    img: 'https://images.unsplash.com/photo-1484723091739-30a097e8f929?w=700&q=80',
+    ingredients: [
+      { qty: 1.2, unit: 'kg', name: 'pommes Reine des Reinettes ou Golden' },
+      { qty: 180, unit: 'g', name: 'sucre' },
+      { qty: 80, unit: 'g', name: 'beurre demi-sel' },
+      { qty: 1, unit: 'gousse', name: 'vanille' },
+      { qty: 250, unit: 'g', name: 'pâte feuilletée' }
+    ],
+    steps: [
+      'Éplucher et couper les pommes en quartiers épais.',
+      'Dans la poêle allant au four, faire fondre le beurre avec le sucre jusqu\'à obtenir un caramel ambré (165°C).',
+      'Ajouter les graines de vanille et disposer les pommes debout, bien serrées, en rosace.',
+      'Cuire à feu vif 15 min en les arrosant de caramel, puis 10 min au four à 200°C.',
+      'Couvrir d\'un disque de pâte feuilletée, border les bords. Cuire encore 20 min à 200°C.',
+      'Laisser tiédir 10 min, puis retourner d\'un geste assuré sur un plat de service.'
+    ],
+    tip: 'Le secret des sœurs Tatin : les pommes doivent être cuites dans le caramel avant la pâte — pas après. La cuisson double est ce qui les rend fondantes.',
+    gesture: 'Le retournement : tenir le plat fermement contre la poêle, un mouvement ample et confiant. Pas d\'hésitation — la chaleur protège !',
+    ustensiles: ['Poêle allant au four 26cm', 'Thermomètre à sucre', 'Plat de service']
+  },
+  {
+    id: 'g7',
+    title: 'Bouillabaisse marseillaise',
+    region: 'Provence',
+    tag: 'Soupe de poisson',
+    difficulty: 'Expert',
+    prepTime: '1h',
+    cookTime: '1h',
+    baseServings: 6,
+    desc: 'La bouillabaisse authentique, avec sa rouille safranée et ses croutons frités. Une symphonie méditerranéenne qui exige des poissons de roche absolument frais.',
+    img: 'https://images.unsplash.com/photo-1476124369491-e7addf5db371?w=700&q=80',
+    ingredients: [
+      { qty: 2, unit: 'kg', name: 'poissons de roche (rascasse, grondin, saint-pierre)' },
+      { qty: 500, unit: 'g', name: 'pommes de terre' },
+      { qty: 3, unit: 'pièces', name: 'tomates' },
+      { qty: 2, unit: 'pièces', name: 'oignons' },
+      { qty: 4, unit: 'gousses', name: 'ail' },
+      { qty: 1, unit: 'g', name: 'safran en filaments' },
+      { qty: 100, unit: 'ml', name: 'huile d\'olive' },
+      { qty: 1, unit: 'verre', name: 'pastis' },
+      { qty: 1, unit: 'bouquet', name: 'fenouil frais' }
+    ],
+    steps: [
+      'Faire revenir oignons et ail dans l\'huile d\'olive. Ajouter les tomates concassées, le fenouil, le safran et le pastis.',
+      'Ajouter les poissons à chair ferme et les pommes de terre. Couvrir d\'eau bouillante, saler.',
+      'Cuire à gros bouillons (c\'est la règle de la bouillabaisse !) 15 min.',
+      'Retirer les poissons à chair tendre. Laisser cuire les pommes de terre 10 min de plus.',
+      'Passer le bouillon au moulin. Rectifier l\'assaisonnement.',
+      'Servir le bouillon séparément avec la rouille et les croûtons. Puis les poissons et pommes de terre.'
+    ],
+    tip: 'La bouillabaisse exige de bouillir fortement — cela crée l\'émulsion entre l\'huile d\'olive et le bouillon qui donne sa richesse.',
+    gesture: 'Le "bouiller-abaisser" : le feu doit être vif les 15 premières minutes, puis baissé pour les pommes de terre. Ce geste de cuisson lui donne son nom.',
+    ustensiles: ['Grande marmite', 'Moulin à légumes', 'Bol à rouille', 'Mortier']
+  },
+  {
+    id: 'g8',
+    title: 'Crème brûlée à la vanille de Tahiti',
+    region: 'Classique français',
+    tag: 'Dessert',
+    difficulty: 'Facile',
+    prepTime: '15 min',
+    cookTime: '45 min',
+    baseServings: 6,
+    desc: 'La plus simple et la plus parfaite des crèmes. Une vanille de Tahiti généreuse, une crème au four en bain-marie, et la magie d\'un caramel craquant au chalumeau.',
+    img: 'https://images.unsplash.com/photo-1470124182917-cc6e71b22ecc?w=700&q=80',
+    ingredients: [
+      { qty: 500, unit: 'ml', name: 'crème entière liquide' },
+      { qty: 6, unit: 'pièces', name: 'jaunes d\'œufs' },
+      { qty: 100, unit: 'g', name: 'sucre semoule' },
+      { qty: 2, unit: 'gousses', name: 'vanille de Tahiti' },
+      { qty: 60, unit: 'g', name: 'sucre cassonade (pour caraméliser)' }
+    ],
+    steps: [
+      'Fendre les gousses de vanille, gratter les graines. Infuser 20 min dans la crème chaude hors du feu.',
+      'Fouetter les jaunes avec le sucre jusqu\'au ruban. Ne pas faire mousser.',
+      'Verser la crème tiède sur les jaunes en filet, sans cesser de mélanger doucement.',
+      'Passer au tamis fin. Répartir dans les ramequins.',
+      'Cuire en bain-marie à 140°C pendant 45 min. La crème doit trembler légèrement au centre.',
+      'Réfrigérer minimum 3h. Au moment de servir, saupoudrer de cassonade et caraméliser au chalumeau.'
+    ],
+    tip: 'Ne pas fouetter les jaunes et le sucre trop longtemps — cela incorpore de l\'air et crée des bulles disgracieuses à la surface.',
+    gesture: 'Le chalumeau doit se trouver à 5 cm de la surface et effectuer des cercles réguliers. S\'arrêter dès que le caramel est uniformément ambré.',
+    ustensiles: ['6 ramequins plats', 'Tamis', 'Chalumeau', 'Plat à bain-marie']
+  },
+  {
+    id: 'g9',
+    title: 'Gratin dauphinois authentique',
+    region: 'Dauphiné',
+    tag: 'Accompagnement',
+    difficulty: 'Facile',
+    prepTime: '20 min',
+    cookTime: '1h30',
+    baseServings: 6,
+    desc: 'Le gratin des gratins. Ni fromage, ni œuf : seulement des pommes de terre, de la crème, de l\'ail et du sel. La pureté absolue de la cuisine de terroir.',
+    img: 'https://images.unsplash.com/photo-1550304943-4f24f54ddde9?w=700&q=80',
+    ingredients: [
+      { qty: 1.5, unit: 'kg', name: 'pommes de terre à chair ferme (Charlotte)' },
+      { qty: 500, unit: 'ml', name: 'crème entière liquide' },
+      { qty: 300, unit: 'ml', name: 'lait entier' },
+      { qty: 3, unit: 'gousses', name: 'ail' },
+      { qty: 1, unit: 'noisette', name: 'beurre' },
+      { qty: 1, unit: 'pincée', name: 'noix de muscade fraîche' }
+    ],
+    steps: [
+      'Éplucher les pommes de terre. Les trancher très finement (2 mm) sans les laver — l\'amidon est précieux.',
+      'Frotter un plat à gratin avec une gousse d\'ail coupée, puis le beurrer.',
+      'Porter à frémissement la crème et le lait avec l\'ail écrasé, la muscade, sel et poivre.',
+      'Plonger les tranches de pommes de terre dans le mélange et cuire 10 min en remuant délicatement.',
+      'Verser dans le plat beurré en disposant soigneusement les tranches.',
+      'Cuire à 160°C pendant 1h20. Le dessus doit être doré, la lame de couteau doit s\'enfoncer sans résistance.'
+    ],
+    tip: 'Ne jamais rincer les pommes de terre après les avoir tranchées — c\'est l\'amidon qui va lier la crème et donner l\'onctuosité caractéristique.',
+    gesture: 'La pré-cuisson dans la crème est l\'astuce des cuisiniers dauphinois : elle garantit la cuisson homogène et l\'absorption des parfums.',
+    ustensiles: ['Mandoline', 'Plat à gratin', 'Casserole']
+  },
+  {
+    id: 'g10',
+    title: 'Far breton aux pruneaux',
+    region: 'Bretagne',
+    tag: 'Dessert breton',
+    difficulty: 'Facile',
+    prepTime: '15 min',
+    cookTime: '50 min',
+    baseServings: 8,
+    desc: 'Mi-clafoutis, mi-flan, le far breton est une douceur paysanne qui concentre le génie breton : peu d\'ingrédients, un résultat bouleversant de générosité.',
+    img: 'https://images.unsplash.com/photo-1571115764595-644a1f56a55c?w=700&q=80',
+    ingredients: [
+      { qty: 250, unit: 'g', name: 'farine' },
+      { qty: 200, unit: 'g', name: 'sucre' },
+      { qty: 4, unit: 'pièces', name: 'œufs' },
+      { qty: 1, unit: 'litre', name: 'lait entier' },
+      { qty: 50, unit: 'g', name: 'beurre demi-sel fondu' },
+      { qty: 300, unit: 'g', name: 'pruneaux d\'Agen dénoyautés' },
+      { qty: 1, unit: 'c.s.', name: 'rhum ambré' }
+    ],
+    steps: [
+      'Faire tremper les pruneaux dans le rhum et un peu d\'eau tiède pendant 30 min.',
+      'Mélanger la farine et le sucre. Creuser un puits et incorporer les œufs un par un.',
+      'Ajouter progressivement le lait en fouettant pour obtenir une pâte lisse et fluide.',
+      'Incorporer le beurre fondu. Laisser reposer la pâte 30 min.',
+      'Beurrer un plat rectangulaire. Disposer les pruneaux égouttés. Verser la pâte dessus.',
+      'Cuire à 180°C pendant 50 min. Le far doit être bien gonflé et légèrement bruni. Se sert tiède ou froid.'
+    ],
+    tip: 'Plus le far est épais, plus il sera dense et fondant. Utilisez un plat profond pour un résultat breton authentique.',
+    gesture: 'Verser la pâte lentement pour ne pas déplacer les pruneaux qui doivent rester uniformément répartis.',
+    ustensiles: ['Plat rectangulaire profond', 'Fouet', 'Saladier']
+  }
+];
+
+// ─── ÉTAT DE L'APP ────────────────────────────────────────────────────────────
+const MAX_COMMUNITY = 100;
+let communityRecipes = [];
+let currentRecipe = null;
+let currentServings = 4;
+let baseServings = 4;
+
+// ─── STORAGE ──────────────────────────────────────────────────────────────────
+function loadCommunity() {
+  try {
+    const saved = localStorage.getItem('ldp_community_v1');
+    if (saved) communityRecipes = JSON.parse(saved);
+  } catch(e) { communityRecipes = []; }
+}
+function saveCommunity() {
+  localStorage.setItem('ldp_community_v1', JSON.stringify(communityRecipes));
+}
+
+// ─── UTILITIES ────────────────────────────────────────────────────────────────
+function scaleQty(qty, base, current) {
+  const ratio = current / base;
+  const result = qty * ratio;
+  if (result === Math.floor(result)) return result;
+  return Math.round(result * 100) / 100;
+}
+function formatQty(val, unit) {
+  if (!unit || unit === 'pièce' || unit === 'pièces' || unit === 'bouquet' || unit === 'gousse' || unit === 'gousses' || unit === 'feuille' || unit === 'verre' || unit === 'noisette' || unit === 'pincée') {
+    return `${val} ${unit || ''}`.trim();
+  }
+  return `${val} ${unit}`;
+}
+
+// ─── RENDER GAUDRY GRID ───────────────────────────────────────────────────────
+function renderGaudry() {
+  const grid = document.getElementById('gaudryGrid');
+  grid.innerHTML = gaudryRecipes.map(r => `
+    <article class="recipe-card" onclick="openGaudryModal('${r.id}')">
+      <div class="card-img-wrap">
+        <img src="${r.img}" alt="${r.title}" class="card-img" loading="lazy"/>
+        <span class="card-region">${r.region}</span>
+      </div>
+      <div class="card-body">
+        <div class="card-meta">
+          <span class="card-meta-item">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            ${r.prepTime}
+          </span>
+          <span class="card-meta-item">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg>
+            ${r.baseServings} pers.
+          </span>
+        </div>
+        <h3 class="card-title">${r.title}</h3>
+        <p class="card-desc">${r.desc}</p>
+      </div>
+      <div class="card-footer">
+        <span class="card-difficulty">${r.difficulty}</span>
+        <span class="card-btn">Voir la recette →</span>
+      </div>
+    </article>
+  `).join('');
+}
+
+// ─── RENDER COMMUNITY GRID ───────────────────────────────────────────────────
+function renderCommunity() {
+  const grid = document.getElementById('communityGrid');
+  const count = communityRecipes.length;
+
+  // Update counters
+  document.getElementById('communaute-count').textContent = count;
+  document.getElementById('bannerCount').textContent = count;
+  document.getElementById('heroStatCommunity').textContent = count;
+
+  let html = '';
+  // Filled cards
+  communityRecipes.forEach((r, i) => {
+    html += `
+      <article class="community-card" onclick="openCommunityModal(${i})">
+        <span class="cc-tag">${r.region || 'Communauté'}</span>
+        <h3 class="cc-title">${r.nom}</h3>
+        <div class="cc-meta">
+          <span>👥 ${r.couverts} pers.</span>
+          <span>⏱ ${r.temps}</span>
+          <span>${r.difficulte}</span>
+        </div>
+      </article>`;
+  });
+  // Empty slots
+  const remaining = MAX_COMMUNITY - count;
+  const emptyShow = Math.min(remaining, 12);
+  for (let i = 0; i < emptyShow; i++) {
+    html += `
+      <div class="community-card empty" onclick="openFormModal()">
+        <div class="empty-icon">+</div>
+        <div class="empty-text">Place libre<br><small>Cliquez pour partager</small></div>
+      </div>`;
+  }
+
+  grid.innerHTML = html;
+}
+
+// ─── OPEN GAUDRY RECIPE MODAL ────────────────────────────────────────────────
+function openGaudryModal(id) {
+  const r = gaudryRecipes.find(x => x.id === id);
+  if (!r) return;
+  currentRecipe = { type: 'gaudry', data: r };
+  baseServings = r.baseServings;
+  currentServings = r.baseServings;
+
+  document.getElementById('modalImg').src = r.img;
+  document.getElementById('modalImg').alt = r.title;
+  document.getElementById('modalImg').style.display = 'block';
+  document.getElementById('modalTag').textContent = `${r.region} · ${r.tag}`;
+  document.getElementById('modalTitle').textContent = r.title;
+  document.getElementById('modalDesc').textContent = r.desc;
+  document.getElementById('servingsCount').textContent = currentServings;
+
+  renderModalIngredients();
+  renderModalSteps(r.steps);
+
+  // Ustensiles
+  const ustBlock = document.getElementById('modalUstBlock');
+  const ustContainer = document.getElementById('modalUstensiles');
+  if (r.ustensiles && r.ustensiles.length) {
+    ustBlock.style.display = 'block';
+    ustContainer.innerHTML = r.ustensiles.map(u => `<span class="ustensile-tag">${u}</span>`).join('');
+  } else {
+    ustBlock.style.display = 'none';
+  }
+
+  // Tip
+  if (r.tip) {
+    document.getElementById('modalTip').style.display = 'block';
+    document.getElementById('modalTipText').textContent = r.tip;
+  } else {
+    document.getElementById('modalTip').style.display = 'none';
+  }
+
+  // Gesture
+  const gestBlock = document.getElementById('modalGestureBlock');
+  if (r.gesture) {
+    gestBlock.style.display = 'block';
+    document.getElementById('modalGestureText').textContent = r.gesture;
+  } else {
+    gestBlock.style.display = 'none';
+  }
+
+  document.getElementById('recipeModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function renderModalIngredients() {
+  const r = currentRecipe.data;
+  const list = document.getElementById('modalIngredients');
+
+  if (currentRecipe.type === 'gaudry') {
+    list.innerHTML = r.ingredients.map(ing => {
+      const scaled = scaleQty(ing.qty, baseServings, currentServings);
+      return `<li><span class="ingredient-qty">${formatQty(scaled, ing.unit)}</span>${ing.name}</li>`;
+    }).join('');
+  } else {
+    // Community recipe
+    const ratio = currentServings / baseServings;
+    list.innerHTML = r.parsedIngredients.map(ing => {
+      if (ing.qty !== null) {
+        const scaled = Math.round(ing.qty * ratio * 100) / 100;
+        return `<li><span class="ingredient-qty">${scaled} ${ing.unit}</span>${ing.name}</li>`;
+      }
+      return `<li><span class="ingredient-qty">—</span>${ing.raw}</li>`;
+    }).join('');
+  }
+}
+
+function renderModalSteps(steps) {
+  document.getElementById('modalSteps').innerHTML = steps.map(s => `<li>${s}</li>`).join('');
+}
+
+// ─── OPEN COMMUNITY RECIPE MODAL ────────────────────────────────────────────
+function openCommunityModal(idx) {
+  const r = communityRecipes[idx];
+  if (!r) return;
+  currentRecipe = { type: 'community', data: r };
+  baseServings = parseInt(r.couverts) || 4;
+  currentServings = baseServings;
+
+  document.getElementById('modalImg').style.display = 'none';
+  document.getElementById('modalTag').textContent = `${r.region || 'Communauté'} · ${r.difficulte}`;
+  document.getElementById('modalTitle').textContent = r.nom;
+  document.getElementById('modalDesc').textContent = r.description;
+  document.getElementById('servingsCount').textContent = currentServings;
+
+  renderModalIngredients();
+  renderModalSteps(r.etapes);
+
+  // Ustensiles
+  const ustBlock = document.getElementById('modalUstBlock');
+  const ustContainer = document.getElementById('modalUstensiles');
+  if (r.ustensiles) {
+    ustBlock.style.display = 'block';
+    ustContainer.innerHTML = r.ustensiles.split(',').map(u => `<span class="ustensile-tag">${u.trim()}</span>`).join('');
+  } else {
+    ustBlock.style.display = 'none';
+  }
+
+  if (r.astuce) {
+    document.getElementById('modalTip').style.display = 'block';
+    document.getElementById('modalTipText').textContent = r.astuce;
+  } else {
+    document.getElementById('modalTip').style.display = 'none';
+  }
+
+  const gestBlock = document.getElementById('modalGestureBlock');
+  if (r.geste) {
+    gestBlock.style.display = 'block';
+    document.getElementById('modalGestureText').textContent = r.geste;
+  } else {
+    gestBlock.style.display = 'none';
+  }
+
+  document.getElementById('recipeModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+// ─── SERVINGS CONTROL ─────────────────────────────────────────────────────────
+document.getElementById('servingsDown').addEventListener('click', () => {
+  if (currentServings > 1) {
+    currentServings--;
+    document.getElementById('servingsCount').textContent = currentServings;
+    renderModalIngredients();
+  }
+});
+document.getElementById('servingsUp').addEventListener('click', () => {
+  if (currentServings < 50) {
+    currentServings++;
+    document.getElementById('servingsCount').textContent = currentServings;
+    renderModalIngredients();
+  }
+});
+
+// ─── MODAL RECIPE CLOSE ───────────────────────────────────────────────────────
+document.getElementById('recipeModalClose').addEventListener('click', closeRecipeModal);
+document.getElementById('recipeModal').addEventListener('click', function(e) {
+  if (e.target === this) closeRecipeModal();
+});
+function closeRecipeModal() {
+  document.getElementById('recipeModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// ─── FORM MODAL ───────────────────────────────────────────────────────────────
+function openFormModal() {
+  if (communityRecipes.length >= MAX_COMMUNITY) {
+    showToast('La communauté est complète (100 recettes). Merci à tous !');
+    return;
+  }
+  document.getElementById('formModal').classList.add('active');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('successMsg').style.display = 'none';
+}
+function closeFormModal() {
+  document.getElementById('formModal').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('formModalClose').addEventListener('click', closeFormModal);
+document.getElementById('formCancelBtn').addEventListener('click', closeFormModal);
+document.getElementById('formModal').addEventListener('click', function(e) {
+  if (e.target === this) closeFormModal();
+});
+
+// ─── PARSE INGREDIENTS ────────────────────────────────────────────────────────
+function parseIngredients(text) {
+  return text.trim().split('\n').filter(l => l.trim()).map(line => {
+    const parts = line.split('·').map(p => p.trim());
+    if (parts.length >= 3) {
+      return { qty: parseFloat(parts[0]) || null, unit: parts[1], name: parts[2], raw: line };
+    }
+    return { qty: null, unit: '', name: line, raw: line };
+  });
+}
+
+// ─── SUBMIT RECIPE ────────────────────────────────────────────────────────────
+document.getElementById('submitRecipeBtn').addEventListener('click', () => {
+  const nom = document.getElementById('f-nom').value.trim();
+  const couverts = document.getElementById('f-couverts').value;
+  const description = document.getElementById('f-description').value.trim();
+  const ingredientsRaw = document.getElementById('f-ingredients').value.trim();
+  const etapesRaw = document.getElementById('f-etapes').value.trim();
+
+  if (!nom || !couverts || !description || !ingredientsRaw || !etapesRaw) {
+    showToast('Veuillez remplir tous les champs obligatoires.');
+    return;
+  }
+
+  const recipe = {
+    nom,
+    couverts: parseInt(couverts),
+    temps: document.getElementById('f-temps').value.trim() || 'N/A',
+    cuisson: document.getElementById('f-cuisson').value.trim(),
+    difficulte: document.getElementById('f-difficulte').value,
+    description,
+    parsedIngredients: parseIngredients(ingredientsRaw),
+    etapes: etapesRaw.split('\n').filter(l => l.trim()),
+    ustensiles: document.getElementById('f-ustensiles').value.trim(),
+    astuce: document.getElementById('f-astuce').value.trim(),
+    geste: document.getElementById('f-geste').value.trim(),
+    region: document.getElementById('f-region').value.trim(),
+    date: new Date().toLocaleDateString('fr-FR')
+  };
+
+  communityRecipes.push(recipe);
+  saveCommunity();
+  renderCommunity();
+
+  // Clear form
+  ['f-nom','f-couverts','f-temps','f-cuisson','f-description','f-ingredients','f-etapes','f-ustensiles','f-astuce','f-geste','f-region'].forEach(id => {
+    document.getElementById(id).value = '';
+  });
+
+  document.getElementById('successMsg').style.display = 'block';
+  showToast('Recette ajoutée avec succès !');
+  setTimeout(closeFormModal, 2000);
+});
+
+// ─── TOAST ────────────────────────────────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ─── NAV BUTTONS ─────────────────────────────────────────────────────────────
+document.getElementById('navAddBtn').addEventListener('click', e => { e.preventDefault(); openFormModal(); });
+document.getElementById('heroAddBtn').addEventListener('click', e => { e.preventDefault(); openFormModal(); });
+document.getElementById('bannerAddBtn').addEventListener('click', () => openFormModal());
+document.getElementById('footerAddBtn').addEventListener('click', e => { e.preventDefault(); openFormModal(); });
+
+// ─── NAV SCROLL ───────────────────────────────────────────────────────────────
+window.addEventListener('scroll', () => {
+  document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
+});
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+loadCommunity();
+renderGaudry();
+renderCommunity();
+</script>
+</body>
+</html>
